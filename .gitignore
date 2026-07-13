@@ -1,0 +1,23 @@
+# Compiled byte-code
+*.elc
+
+# Backup and autosave files
+*~
+\#*\#
+backups/
+auto-saves/
+auto-save-list/
+
+# Undo history
+undo-history/
+
+# Packages directory (automatically installed on start)
+elpa/
+
+# Custom settings file (local-only customizations)
+custom.el
+
+# Devenv and Direnv local folders
+.devenv/
+devenv.local.nix
+.direnv/
