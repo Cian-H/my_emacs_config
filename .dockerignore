@@ -1,0 +1,19 @@
+.git
+.devenv
+.direnv
+devenv.lock
+devenv.nix
+devenv.yaml
+.envrc
+# Compiled byte-code
+*.elc
+# Backup/autosave files
+*~
+\#*\#
+backups/
+auto-saves/
+auto-save-list/
+undo-history/
+# Packages directory (installed on build)
+elpa/
+custom.el
