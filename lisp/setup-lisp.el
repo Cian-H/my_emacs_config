@@ -17,17 +17,8 @@
 ;; Install lispyville for evil-mode integration with lispy
 (use-package lispyville
   :ensure t
-  :after (evil lispy)
-  :hook (lispy-mode . lispyville-mode)
+  :hook ((lisp-data-mode . lispyville-mode))
   :config
-  ;; Configure lispyville keythemes for seamless evil integration
-  (lispyville-set-keytheme 
-   '(operators
-     c-w
-     prettify
-     additional
-     additional-insert
-     slurping
-     comments)))
+  (lispyville-set-keytheme '(operators c-w additional)))
 
 (provide 'setup-lisp)

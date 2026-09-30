@@ -52,13 +52,13 @@
 
 ;; Font configuration - attempt to load common high-quality developer fonts
 (defun my/configure-font ()
-  (let ((font-families '("JetBrains Mono" "Fira Code" "Hack" "SF Mono" "Source Code Pro" "Monospace"))
+  (let ((font-families '("MonaspiceNe Nerd Font Mono" "Hack" "SF Mono" "Source Code Pro" "Monospace"))
         (found-font nil))
     (while (and font-families (not found-font))
       (let ((family (car font-families)))
         (if (member family (font-family-list))
             (progn
-              (set-face-attribute 'default nil :font (font-spec :family family :size 11))
+              (set-face-attribute 'default nil :font (font-spec :family family :size 16))
               (setq found-font t))
           (setq font-families (cdr font-families)))))))
 
