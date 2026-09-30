@@ -19,6 +19,6 @@
   :ensure t
   :hook ((lisp-data-mode . lispyville-mode))
   :config
-  (lispyville-set-keytheme '(operators c-w additional)))
+  (lispyville-set-key-theme '(operators c-w additional)))
 
 (provide 'setup-lisp)
