@@ -21,4 +21,10 @@
   :config
   (lispyville-set-key-theme '(operators c-w additional)))
 
+;; Add slime for lisp image integration
+(use-package sly
+  :ensure t
+  :config
+  (setq inferior-lisp-program "sbcl"))
+
 (provide 'setup-lisp)
