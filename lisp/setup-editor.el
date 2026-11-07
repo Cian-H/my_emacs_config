@@ -5,6 +5,29 @@
 (setq-default tab-width 4)
 (setq-default c-basic-offset 4)
 (setq-default js-indent-level 4)
+(setq-default scroll-margin 4) ; Minimal number of screen lines to keep above/below cursor
+
+;; Set custom file associations matching Neovim
+(add-to-list 'auto-mode-alist '("\\.scl\\'" . prog-mode))
+(add-to-list 'auto-mode-alist '("\\.pro\\(log\\)?\\'" . prolog-mode))
+(add-to-list 'auto-mode-alist '("\\.nu\\'" . sh-mode))
+(add-to-list 'auto-mode-alist '("\\.mojo\\'" . python-mode))
+(add-to-list 'auto-mode-alist '("\\.pig\\'" . sql-mode))
+(add-to-list 'auto-mode-alist '("\\.h\\(ql\\|ive\\)\\'" . sql-mode))
+
+;; Shell configuration (nushell if installed)
+(when (executable-find "nu")
+  (setq shell-file-name (executable-find "nu")))
+
+;; 2-space indentation hooks for languages matching ftplugin
+(defun my/set-two-space-indent ()
+  (setq-local tab-width 2)
+  (setq-local standard-indent 2))
+
+(add-hook 'lisp-mode-hook #'my/set-two-space-indent)
+(add-hook 'scheme-mode-hook #'my/set-two-space-indent)
+(add-hook 'emacs-lisp-mode-hook #'my/set-two-space-indent)
+(add-hook 'nix-mode-hook #'my/set-two-space-indent)
 
 ;; Enable line numbers and relative numbers (kickstart / neovim default)
 (setq-default display-line-numbers 'relative
@@ -103,13 +126,45 @@
            (selected (completing-read "Harpoon: " (mapcar #'car choices) nil t)))
       (find-file (cdr (assoc selected choices))))))
 
+;; --- Yank / Path helper functions ---
+(defun my/yank-relative-path ()
+  "Copy relative path of current file to clipboard."
+  (interactive)
+  (if-let* ((file (buffer-file-name)))
+      (let ((rel (file-relative-name file (or (project-root (project-current)) default-directory))))
+        (kill-new rel)
+        (message "Yanked relative path: %s" rel))
+    (message "Buffer is not visiting a file")))
+
+(defun my/yank-path-with-line ()
+  "Copy relative path and line number of current buffer to clipboard."
+  (interactive)
+  (if-let* ((file (buffer-file-name)))
+      (let* ((rel (file-relative-name file (or (project-root (project-current)) default-directory)))
+             (res (format "%s:%d" rel (line-number-at-pos))))
+        (kill-new res)
+        (message "Yanked path with line: %s" res))
+    (message "Buffer is not visiting a file")))
+
+(defun my/yank-absolute-path ()
+  "Copy absolute path of current file to clipboard."
+  (interactive)
+  (if-let* ((file (buffer-file-name)))
+      (progn
+        (kill-new file)
+        (message "Yanked absolute path: %s" file))
+    (message "Buffer is not visiting a file")))
+
 ;; --- Keybindings setup ---
 (with-eval-after-load 'general
-  ;; Todo jump bindings (normal mode)
+  ;; Normal mode global navigation & undotree
   (general-define-key
    :states 'normal
+   "U" 'undo-tree-visualize
    "]t" 'hl-todo-next
-   "[t" 'hl-todo-previous)
+   "[t" 'hl-todo-previous
+   "]q" 'flymake-goto-next-error
+   "[q" 'flymake-goto-prev-error)
 
   (my-leader-def
    ;; Rainbow Delimiters toggle
@@ -126,6 +181,20 @@
    "ts" 'dirvish-side              ; Show sidebar tree
    "tc" 'dirvish-side              ; Close sidebar tree
    "tf" 'dirvish-side              ; Focus sidebar tree
+
+   ;; Yank / Path Group (<leader>y)
+   "y" '(:ignore t :which-key "Yank/Path")
+   "yp" 'my/yank-relative-path
+   "yl" 'my/yank-path-with-line
+   "ya" 'my/yank-absolute-path
+
+   ;; UI / Toggles Group (<leader>u)
+   "u" '(:ignore t :which-key "UI/Toggles")
+   "ui" 'eglot-inlay-hints-mode
+   "ud" 'flymake-mode
+   "uw" 'visual-line-mode
+   "ul" 'display-line-numbers-mode
+   "us" 'flyspell-mode
    )
 
   ;; Harpoon slots mapped to Alt-a/s/d/f in normal mode (matches Neovim settings)

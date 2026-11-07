@@ -21,6 +21,7 @@
    ;; Git Hunk Group (<leader>g)
    "gs" 'diff-hl-stage-hunk         ; SPC g s: Stage current hunk
    "gr" 'diff-hl-revert-hunk        ; SPC g r: Revert current hunk
+   "gp" 'diff-hl-show-hunk          ; SPC g p: Preview current hunk
    "gb" 'magit-blame-addition       ; SPC g b: Git Blame line
 
    ;; Magit/Lazygit Group (<leader>l)

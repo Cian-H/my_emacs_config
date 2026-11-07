@@ -3,6 +3,7 @@
 ;; Set default frame parameters (clean background, no scrollbars)
 (setq-default frame-title-format '("%b - Emacs"))
 (setq ring-bell-function 'ignore) ; Silence bells
+(global-hl-line-mode 1) ; Highlight current cursor line (mirrors cursorline)
 
 ;; Install and load doom-themes for Tokyonight Night
 (use-package doom-themes

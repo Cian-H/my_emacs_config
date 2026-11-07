@@ -17,11 +17,21 @@
 ;; Install lispyville for evil-mode integration with lispy
 (use-package lispyville
   :ensure t
-  :hook ((lisp-data-mode . lispyville-mode))
+  :after (evil lispy)
+  :hook ((lispy-mode . lispyville-mode)
+         (lisp-data-mode . lispyville-mode))
   :config
-  (lispyville-set-key-theme '(operators c-w additional)))
+  ;; Configure lispyville keythemes for seamless evil integration
+  (lispyville-set-key-theme 
+   '(operators
+     c-w
+     prettify
+     additional
+     additional-insert
+     slurping
+     comments)))
 
-;; Add slime for lisp image integration
+;; Add Sly for Common Lisp image integration
 (use-package sly
   :ensure t
   :config

@@ -70,13 +70,17 @@
   (my-leader-def
    ;; Search Group (<leader>s)
    "sf" 'consult-find              ; [S]earch [F]iles (Telescope find_files)
+   "sb" 'consult-buffer            ; [S]earch [B]uffers
    "sg" 'consult-ripgrep           ; [S]earch by [G]rep (Telescope live_grep)
    "sw" 'consult-line-multi        ; [S]earch current [W]ord across open buffers
    "sd" 'consult-compile-error     ; [S]earch [D]iagnostics
+   "sr" 'vertico-repeat            ; [S]earch [R]esume
    "s." 'consult-recent-file       ; [S]earch Recent Files (Telescope oldfiles)
    "s/" 'consult-ripgrep           ; [S]earch in open files
    "sh" 'describe-bindings         ; [S]earch [H]elp
    "sk" 'describe-bindings         ; [S]earch [K]eymaps
+   "sn" (lambda () (interactive) (find-file user-emacs-directory)) ; [S]earch [N]eovim/Emacs config
+   "st" 'hl-todo-occur             ; [S]earch [T]odo comments
 
    ;; Global quick searches
    "<leader>" 'consult-buffer      ; SPC SPC: Find existing buffers

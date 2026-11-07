@@ -30,6 +30,7 @@
    :keymaps 'eglot-mode-map
    "K" 'eldoc                          ; Hover documentation
    "gd" 'xref-find-definitions          ; Go to definition
+   "ge" 'xref-find-definitions          ; Go to declaration
    "gi" 'eglot-find-implementation      ; Go to implementation
    "gr" 'xref-find-references          ; Go to references
    "gt" 'eglot-find-typeDefinition)    ; Go to type definition
@@ -38,6 +39,8 @@
   (my-leader-def
    :keymaps 'eglot-mode-map
    "ca" 'eglot-code-actions            ; SPC c a: Code Action
+   "cs" 'consult-eglot-symbols         ; SPC c s: Document Symbols
+   "cw" 'xref-find-apropos             ; SPC c w: Workspace Symbols
    "r"  'eglot-rename                  ; SPC r: Rename symbol
    "f"  'eglot-format-buffer           ; SPC f: Format buffer
    "ci" 'eglot-inlay-hints-mode        ; SPC c i: Toggle inlay hints
